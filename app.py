@@ -5,6 +5,11 @@ import os
 from nltk.corpus import stopwords
 from mtranslate import translate
 import requests
+import nltk
+try:
+    nltk.data.find('corpora/stopwords')
+except  LookupError:
+    nltk.download('stopwords')
 
 app = Flask(__name__)
 UPLOAD_FOLDER = 'uploads'
@@ -91,4 +96,5 @@ def predict_link():
         return render_template('index.html', prediction_text=result)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get('PORT',5000))
+    app.run(host='0.0.0.0', port=port)
