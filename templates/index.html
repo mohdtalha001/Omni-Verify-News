@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Omni Verify News</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f6f9; margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 600px; text-align: center; }
+        h2 { color: #333; margin-bottom: 5px; }
+        p { color: #666; font-size: 14px; margin-bottom: 25px; }
+        .section-box { border: 1px dashed #bbb; padding: 20px; border-radius: 8px; margin-bottom: 20px; background: #fafafa; text-align: left; }
+        h3 { margin-top: 0; color: #444; }
+        textarea, input[type="text"] { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 15px; box-sizing: border-box; }
+        textarea { height: 80px; resize: none; }
+        input[type="file"] { margin: 10px 0; font-size: 15px; }
+        button { background-color: #007bff; color: white; border: none; padding: 12px 20px; font-size: 16px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; margin-top: 10px; }
+        button:hover { background-color: #0056b3; }
+        .result { margin-top: 25px; padding: 15px; border-radius: 8px; font-weight: bold; font-size: 22px; text-transform: uppercase; text-align: center; }
+        .fake { background-color: #ffebee; color: #c62828; border: 2px solid #ffcdd2; }
+        .real { background-color: #e8f5e9; color: #2e7d32; border: 2px solid #c8e6c9; }
+        .divider { text-align: center; margin: 15px 0; font-weight: bold; color: #888; }
+    </style>
+</head>
+<body>
+    <body>
+    <div class="container" style="margin-top: -50px;">
+        
+        <!-- DEVELOPED BY SECTION -->
+        <div style="text-align: center; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px dashed #ddd; width: 100%;">
+            <div style="font-size: 15px; color: #444;">Developed by: <strong style="color: #007bff; font-size: 18px;">Syed Mohd Talha</strong></div>
+            <div style="font-size: 13px; color: #666; margin-top: 5px;">
+                📧 Email: <a href="mailto:syedmohdtalha0@gmail.com" style="color: #666; text-decoration: none;">syedmohdtalha0@gmail.com</a> | 
+                📞 Contact: <a href="tel:+917844985719" style="color: #007bff; text-decoration: none; font-weight: bold;">+91 7844985719</a>
+            </div>
+        </div>
+
+        <!-- MAIN HEADING (ONLY ONE TIME) -->
+        <h2>Omni Verify News</h2>
+        <p>Verify Text (Hindi/English), Upload Videos, or Paste Video Links</p>
+
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Omni Verify News</h2>
+        <p>Verify Text (Hindi/English), Upload Videos, or Paste Video Links</p>
+        
+        <!-- OPTION 1: TEXT -->
+        <div class="section-box">
+            <h3>Option 1: Check Text / News (Hindi & English)</h3>
+            <form action="/predict_text" method="POST">
+                <textarea name="news" placeholder="Paste news article or WhatsApp message here..." required></textarea>
+                <button type="submit">Verify Text</button>
+            </form>
+        </div>
+
+        <div class="divider">OR</div>
+
+        <!-- OPTION 2: VIDEO FILE -->
+        <div class="section-box">
+            <h3>Option 2: Upload Video File (Deepfake Scan)</h3>
+            <form action="/predict_video" method="POST" enctype="multipart/form-data">
+                <input type="file" name="video" accept="video/*" required><br>
+                <button type="submit">Scan Video File</button>
+            </form>
+        </div>
+
+        <div class="divider">OR</div>
+
+        <!-- OPTION 3: VIDEO LINK -->
+        <div class="section-box">
+            <h3>Option 3: Paste Video URL (YouTube, Twitter, etc.)</h3>
+            <form action="/predict_link" method="POST">
+                <input type="text" name="video_url" placeholder="https://www.youtube.com/watch?v=..." required>
+                <button type="submit">Analyze Video Link</button>
+            </form>
+        </div>
+
+        {% if prediction_text %}
+            <div class="result {% if 'FAKE' in prediction_text or 'DEEPFAKE' in prediction_text or 'INVALID' in prediction_text %}fake{% else %}real{% endif %}">
+                Result: {{ prediction_text }}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
